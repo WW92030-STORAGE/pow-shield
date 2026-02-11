@@ -1,0 +1,8 @@
+curl http://127.0.0.1:5000 -X POST -H "Content-Type: application/json" -d '{
+    "pow_prefix": "what is a man? a miserable pile of secrets?___2026-02-08 07:48:42.317538+00:00___", 
+    "pow_solution": "5430", 
+    "timestamp": "Sun, 08 Feb 2026 07:48:42 GMT", 
+    "difficulty": 4
+}'
+
+%7b%0a%20%20%20%20%22pow_prefix%22%3a%20%22value%22%2c%20%22pow_solution%22%3a%20%22value%22%0a%7d
