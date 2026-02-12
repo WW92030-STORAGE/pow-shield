@@ -5,8 +5,10 @@ import requests
 import datetime
 from src.pow import sath
 import dateutil as pdu
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/assets/', defaults={'path': ''},  methods = ['GET', 'POST'])
 @app.route('/assets/<path:path>', methods = ['GET', 'POST'])
@@ -35,16 +37,17 @@ def home(path):
     print("REQ", request.method)
     print("PATH[", path, "]")
 
-    if path == "":
-        path = "index.html"
-
     try:
         certificate = request.cookies.get(CONSTANTS.CERT_COOKIE)
         print("expires_on:", certificate)
         current_time = datetime.datetime.now(datetime.timezone.utc)
         expiry = pdu.parser.parse(certificate)
         if current_time < expiry:
-            return render_template(path), CONSTANTS.CODE_PASS
+            if "http" not in CONSTANTS.TARGET_SITE:
+                return render_template(path), CONSTANTS.CODE_PASS
+            redir = redirect(CONSTANTS.TARGET_SITE + path)
+            print("REDIR", redir)
+            return redir
     except Exception:
         pass
 
@@ -76,11 +79,11 @@ def home(path):
                     return jsonify({"result": "FAIL"}), CONSTANTS.CODE_FAIL
 
                 # Success!!
-                resp = redirect(CONSTANTS.TARGET_SITE)
-                resp = jsonify({"result": "PASS"})
+                print("SUCCESS!", CONSTANTS.TARGET_SITE)
+                resp = jsonify({"result": "PASS", "redirect_url": CONSTANTS.TARGET_SITE})
                 thing = current_time + datetime.timedelta(seconds = CONSTANTS.EXPIRATION_SECONDS)
                 resp.set_cookie(CONSTANTS.CERT_COOKIE, str(thing))
-                return resp, 200
+                return resp, CONSTANTS.CODE_PASS
             except Exception as e:
                 print("EXCEPTION", e)
                 return jsonify({"result": "ERROR"}), CONSTANTS.CODE_FAIL

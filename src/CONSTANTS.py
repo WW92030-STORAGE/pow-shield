@@ -29,7 +29,7 @@ with open('.config', 'r') as FILE:
         if line[:len('DIFF')] == 'DIFF':
             DIFF = int(sh[2])
         if line[:len('PREFIX_PROMPT')] == 'PREFIX_PROMPT':
-            PREFIX_PROMPT = line[len('PREFIX_PROMPT = ') + 1:].strip()
+            PREFIX_PROMPT = line[len('PREFIX_PROMPT = '):].strip()
         if line[:len('CODE_PROGRESS')] == 'CODE_PROGRESS':
             CODE_PROGRESS = int(sh[2])
         if line[:len('CODE_PASS')] == 'CODE_PASS':
@@ -37,7 +37,7 @@ with open('.config', 'r') as FILE:
         if line[:len('CODE_FAIL')] == 'CODE_FAIL':
             CODE_FAIL = int(sh[2])
         if line[:len('TARGET_SITE')] == 'TARGET_SITE':
-            TARGET_SITE = line[len('TARGET_SITE = ') + 1:].strip()
+            TARGET_SITE = line[len('TARGET_SITE = '):].strip()
 
         
 print("CONFIG")

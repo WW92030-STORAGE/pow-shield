@@ -60,7 +60,7 @@ function pick(lines) {
     if (line.length >= 2 && line.charAt(0) == '-' && line.charAt(1) == '-') continue;
     if (line.charAt(0) == '!') {
       let closebracket = line.indexOf(']');
-      let number = parseInt(line.substr(2, closebracket - 2));
+      let number = parseFloat(line.substr(2, closebracket - 2));
       line = line.substr(closebracket + 1);
       weight = number;
     }
@@ -89,6 +89,8 @@ async function setup_visuals() {
 
 async function passed() {
   document.getElementById("splash").textContent = "A WINNER IS YOU"
+
+
 }
 
 async function dothething() {
@@ -101,7 +103,7 @@ async function dothething() {
     body: JSON.stringify({"req_challenge": 0})
   });
 
-  const contents = await challenge.json()
+  const contents = await challenge.json();
 
   console.log(contents);
 
@@ -130,13 +132,14 @@ async function dothething() {
     )
   });
 
-  console.log(response);
+  const response_contents = await response.json();
+  console.log("FINAL RESPONSE: " + response_contents.redirect_url);
 
   passed();
   
 
-  if (response.url) {
-    window.location.href = response.url;
+  if (response_contents.redirect_url) {
+    window.location.href = response_contents.redirect_url;
   } else {
     console.log("what???")
   }
