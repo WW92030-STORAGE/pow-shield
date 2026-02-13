@@ -2,7 +2,7 @@
 
 Proof of concept for a lightweight internet spam filter. This one uses proof of work challenges to hinder the progress of spam, DDoS attacks, etc.
 
-Be aware this is not modular (or robust) yet but soon will be. For now it's a simple reverse proxy that integrates the pow challenge.
+Be aware this is not modular (or robust) yet but soon will be. For now it's a simple reverse proxy (or rather, something you can also put behind a reverse proxy) that integrates the pow challenge.
 
 # FORMATS
 
