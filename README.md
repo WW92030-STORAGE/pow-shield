@@ -17,7 +17,7 @@ The solution in question is actually the nonce/suffix. The combined string is <p
 - Customize stuff in `.config`
 - Personalize the visuals of the loading page in `static/assets/*` and `static/pow_shield/style.css` as well as the loading screen `pow_shield_loading_page.html` in `templates`
 - TBA (Not finished yet sorry. For now there's a couple of static pages in `templates` that you can replace with your website. You must preserve `pow_shield_loading_page.html`. You can also redirect to an external domain. I think there is a way to hide your website's actual IP/port/whatever from access and only accessible by forwarding these ones, in case you wish to reverse proxy this on some external IP/port. I am currently working on getting this working in practice. If you deploy a webapp on another IP address you can also use that.)
-- Note that each time you pass the challenge the landing page is the root of the target location. Subsequent requests to the port this is deployed to will work properly.
+- The system should forward requests (assuming you have recently passed the challenge) correctly?
 
 # SEE ALSO
 
