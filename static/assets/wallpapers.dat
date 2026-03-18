@@ -1,5 +1,6 @@
--- Comments begin with two dashes. Empty lines are ignored.
+-- Comments begin with two dashes. Empty lines are ignored. ![...] denotes a probability weight.
 -- Put file names here. The root folder is ./wallpapers
 
 ![67] placeholder.png
 ![67] chess.png
+

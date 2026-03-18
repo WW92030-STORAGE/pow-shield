@@ -6,10 +6,14 @@ import datetime
 from src.pow import sath
 import dateutil as pdu
 from flask_cors import CORS
+import certifi
+import traceback
 
 app = Flask(__name__)
 CORS(app)
 
+
+# Thing to get assets
 @app.route('/assets/', defaults={'path': ''},  methods = ['GET', 'POST'])
 @app.route('/assets/<path:path>', methods = ['GET', 'POST'])
 def get_assets(path):
@@ -24,6 +28,7 @@ def get_assets(path):
         headers={"Content-Disposition": "attachment;filename=assets/" + path}
     )
 
+# Thing to get wallpapers
 @app.route('/assets/wallpapers/', defaults={'path': ''},  methods = ['GET', 'POST'])
 @app.route('/assets/wallpapers/<path:path>', methods = ['GET', 'POST'])
 def get_wallpapers(path):
@@ -31,8 +36,8 @@ def get_wallpapers(path):
     return send_file("static/assets/wallpapers/" + path, mimetype='image/png')
 
 
-@app.route('/', defaults={'path': ''},  methods = ['GET', 'POST'])
-@app.route('/<path:path>', methods = ['GET', 'POST'])
+@app.route('/', defaults={'path': ''},  methods = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'])
+@app.route('/<path:path>', methods = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'])
 def home(path):
     print("REQ", request.method)
     print("PATH[", path, "]")
@@ -45,10 +50,32 @@ def home(path):
         if current_time < expiry:
             if "http" not in CONSTANTS.TARGET_SITE:
                 return render_template(path), CONSTANTS.CODE_PASS
+            """
             redir = redirect(CONSTANTS.TARGET_SITE + path)
             print("REDIR", redir)
             return redir
-    except Exception:
+            """
+
+            url = CONSTANTS.TARGET_SITE + "/" + path
+
+            resp = requests.request(
+                    method=request.method,
+                    url=url,
+                    headers={k: v for k, v in request.headers if k.lower() != "host"},
+                    data=request.get_data(),
+                    cookies=request.cookies,
+                    allow_redirects=False,
+            )
+            
+            print("MEMOIZED", resp)
+
+            # Return response unchanged
+            return Response(resp.content, resp.status_code, resp.headers.items())
+        else:
+            print("EXPIRED!")
+    except Exception as e:
+        print("NO COOKIES :(")
+        print(e)
         pass
 
     if request.is_json:
@@ -80,12 +107,20 @@ def home(path):
 
                 # Success!!
                 print("SUCCESS!", CONSTANTS.TARGET_SITE)
-                resp = jsonify({"result": "PASS", "redirect_url": CONSTANTS.TARGET_SITE})
+
+                url = CONSTANTS.TARGET_SITE + "/" + path
+
+                print("URL", url)
+
+                resp = jsonify({"result": "PASS", "url": url})
                 thing = current_time + datetime.timedelta(seconds = CONSTANTS.EXPIRATION_SECONDS)
                 resp.set_cookie(CONSTANTS.CERT_COOKIE, str(thing))
+
+                print("RESP", resp, resp.json)
                 return resp, CONSTANTS.CODE_PASS
             except Exception as e:
                 print("EXCEPTION", e)
+                traceback.print_exc()
                 return jsonify({"result": "ERROR"}), CONSTANTS.CODE_FAIL
             
 

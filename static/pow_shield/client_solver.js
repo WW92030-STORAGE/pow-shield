@@ -132,17 +132,22 @@ async function dothething() {
     )
   });
 
+  console.log("RAW RESPONSE" + response);
+
   const response_contents = await response.json();
-  console.log("FINAL RESPONSE: " + response_contents.redirect_url);
+  console.log("FINAL RESPONSE: " + response_contents);
 
   passed();
-  
 
-  if (response_contents.redirect_url) {
-    window.location.href = response_contents.redirect_url;
+  if (response_contents.url) {
+    console.log("URL", response_contents.url);
+    location.reload();
   } else {
-    console.log("what???")
+    console.log("what???");
+    location.reload();
   }
+
+  console.log("xxxx");
 }
 
 dothething();

@@ -1,6 +1,6 @@
 # ASSETS
 
-Various assets and whatnot. Feel free to customize as needed.
+Various assets and whatnot. Feel free to customize as needed (and also the css for the loading page).
 
 ## `splashes.txt`
 
