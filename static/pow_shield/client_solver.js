@@ -1,9 +1,23 @@
-// Constant values (need to change here)
+/*
 
+DO NOT CHANGE = these don't really have any customization and/or are required for the system to work properly.
+CHANGE ME = change as necessary
+CUSTOMIZE ME = personalization (javascript knowledge might be required)
+
+*/
+
+// Constant values (CHANGE ME)
+
+// Port or URL that acts as the request URL (e.g. if you type in this URL you will enter the loading screen and then redirect to TARGET_SITE.)
 THIS_PORT = 'http://127.0.0.1:5000/'
+
+// Upper bound which the client will test things. Otherwise it returns -1 and will most likely induce a retry.
 const UPPER_BOUND = 16777216;
 
+// End constant values (END CHANGE ME)
+
 // The 'crypto' object is globally available in the browser window
+// DO NOT CHANGE
 async function COMPUTE_HASH(message) {
   const encoder = new TextEncoder();
   const data = encoder.encode(message);
@@ -16,6 +30,7 @@ async function COMPUTE_HASH(message) {
   return hashHex
 }
 
+// DO NOT CHANGE
 async function solve_challenge(prefix, diff, upper_bound) {
   for (let i = 0; i < upper_bound; i++) {
     const computed_hash = await COMPUTE_HASH(prefix + i.toString());
@@ -28,6 +43,7 @@ async function solve_challenge(prefix, diff, upper_bound) {
   return -1;
 }
 
+// DO NOT CHANGE
 function weighted(arr) { // generate a random number from 0 - (length - 1) based on the weight in each index
 	var n = arr.length;
 	var psum = [0];
@@ -46,6 +62,7 @@ function weighted(arr) { // generate a random number from 0 - (length - 1) based
   return Math.floor(Math.random() * n); // last resort
 }
 
+// DO NOT CHANGE -- INSTEAD GO TO setup_visuals()
 function pick(lines) {
   const lines_array = lines.split(/\r?\n|\r/); // from google
   console.log(lines_array);
@@ -74,25 +91,29 @@ function pick(lines) {
   return splashes[index];
 }
 
+// CUSTOMIZE ME
 async function setup_visuals() {
-  splashes = await (await fetch("assets/splashes.txt")).text();
+  splashes = await (await fetch("/assets/splashes.txt")).text();
 
   chosen = pick(splashes);
 
   document.getElementById("splash").textContent = chosen;
 
-  backgrounds = await (await fetch("assets/wallpapers.dat")).text();
+  backgrounds = await (await fetch("/assets/wallpapers.dat")).text();
   chosen = pick(backgrounds).trim();
   console.log("CHOSEN IMAGE" + chosen);
-  document.getElementById("backdrop").style.backgroundImage = "url('assets/wallpapers/" + chosen + "')";
+  document.getElementById("backdrop").style.backgroundImage = "url('/assets/wallpapers/" + chosen + "')";
 }
 
+// CUSTOMIZE ME
 async function passed() {
-  document.getElementById("splash").textContent = "A WINNER IS YOU"
-
-
+  let WIN_COLOR = "cyan";
+  document.getElementById("splash").textContent = "A WINNER IS YOU";
+  document.getElementById("header").style.backgroundColor = WIN_COLOR;
+  document.getElementById("splash").style.backgroundColor = WIN_COLOR;
 }
 
+// DO NOT
 async function dothething() {
   await setup_visuals();
   const challenge = await fetch(THIS_PORT, {

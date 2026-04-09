@@ -1,27 +1,30 @@
 -- Comments begin with two dashes. Empty lines are ignored. ![...] denotes a probability weight.
+-- Feel free to replace these. Why didn't I do this in the javascript itself? Too hard to manage the probabilities.
 
 -- Basic
-![256] Filter Activated!
-![256] Making sure you're not a bot!
-![256] Running proof of work challenge!
+![64] Filter Activated!
+![64] Making sure you're not a bot!
+![64] Running proof of work challenge!
 
 -- Most of the rest of these lines are memes and references to other media.
 
 -- Sonic the Hedgehog
-Snoo-PING AS Usual I seeeeee!!!
+Snooping as usual I seeeeee?!?!
 That's no gooood...
 GOTTA GO FAST!
 
 -- Castlevania dracula localization
 It was not by my hand that I was once again given flesh.
 I was called here by ... Humans who wished to pay ME ... tribute!
-![64] What is a man? A miserable pile of secrets?
+![16] What is a man? A miserable pile of secrets?
 
 -- MLG memes
 Mom get the camera!
 Happy feet WOMBO COMBO (That ain't Falco) That ain't Falco OH OHHHH!!!
 Illuminati Confirmed!
 I broke up with my ex girl. Here's her number ... SIKE! THAT'S THE WRONG NUMBER!!
+[Air horn noises]
+Oh baby a triple! Oh yeah!
 
 -- Link: The Faces of Evil
 Gee, it sure is boring around here!
@@ -53,6 +56,8 @@ WATER ON THE HILL!
 AIR DETECTED
 Well met!
 Ah, Welcome!
+A true dasher does not need to check fluff, player. He goes by pure animal instinct.
+quack.
 
 -- AnarchyChess
 Google En Passant
@@ -61,9 +66,7 @@ New response just dropped
 Call the exorcist!
 
 -- Miscellaneous/inside jokes
-There's really no hard limit to how long these splashes can be and to be quite honest I'm rather curious to see how far we can go. Primagens are furry cyborgs which most notably have an electronic visor/display as a face. A Primagen's facial visor shows computer-generated eyes, nostrils, and a mouth which can all move and change shape in response to the character's emotions. A Primagen's visor forms a long snout shape. Primagens also have four robotic ears. <wikifur> Anyways, how's your day been?
+There's really no hard limit to how long these splashes can be and to be quite honest I'm rather curious to see how far we can go. <wikifur>Primagens are furry cyborgs which most notably have an electronic visor/display as a face. A Primagen's facial visor shows computer-generated eyes, nostrils, and a mouth which can all move and change shape in response to the character's emotions. A Primagen's visor forms a long snout shape. Primagens also have four robotic ears.</wikifur> Anyways, how's your day been?
 You require one elephant.
 Don't trust the pillars.
 Whatever you do at the crossroads, don't turn left.
-This IS ... THE OTHER PLACE!!!
-The intent is to provide players with a sense of pride and accomplishment for unlocking different heroes. 

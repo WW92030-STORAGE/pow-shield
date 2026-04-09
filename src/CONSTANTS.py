@@ -38,6 +38,8 @@ with open('.config', 'r') as FILE:
             CODE_FAIL = int(sh[2])
         if line[:len('TARGET_SITE')] == 'TARGET_SITE':
             TARGET_SITE = line[len('TARGET_SITE = '):].strip()
+        if line[:len('CERT_COOKIE')] == 'CERT_COOKIE':
+            CERT_COOKIE = line[len('CERT_COOKIE = '):].strip()
 
         
 print("CONFIG")
@@ -47,3 +49,4 @@ print("PREFIX_PROMPT:", PREFIX_PROMPT)
 print("CODE_PROGRESS:", CODE_PROGRESS)
 print("CODE_PASS:", CODE_PASS)
 print("CODE_FAIL:", CODE_FAIL)
+print("CERT_COOKIE:", CERT_COOKIE)

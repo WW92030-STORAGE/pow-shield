@@ -12,11 +12,13 @@ import traceback
 app = Flask(__name__)
 CORS(app)
 
+VERBOSE = True
 
 # Thing to get assets
 @app.route('/assets/', defaults={'path': ''},  methods = ['GET', 'POST'])
 @app.route('/assets/<path:path>', methods = ['GET', 'POST'])
 def get_assets(path):
+    print("ASSETS!!!", path)
     asset_text = ""
     with open("static/assets/" + path, 'r') as FILE:
         for line in FILE:
@@ -32,19 +34,27 @@ def get_assets(path):
 @app.route('/assets/wallpapers/', defaults={'path': ''},  methods = ['GET', 'POST'])
 @app.route('/assets/wallpapers/<path:path>', methods = ['GET', 'POST'])
 def get_wallpapers(path):
-    print("WALLPAPER!", path)
+    if (VERBOSE):
+        print("WALLPAPER!", path)
     return send_file("static/assets/wallpapers/" + path, mimetype='image/png')
 
 
+# Actual request processing
 @app.route('/', defaults={'path': ''},  methods = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'])
-@app.route('/<path:path>', methods = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'])
+@app.route('/<path:path>', methods = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], strict_slashes = False)
 def home(path):
-    print("REQ", request.method)
-    print("PATH[", path, "]")
+    if len(path) > 0 and path[-1] == "/":
+        print("DIR!!!!", path)
+    if (VERBOSE):
+        print("REQ", request.method)
+        print("PATH[", path, "]")
+
+
 
     try:
         certificate = request.cookies.get(CONSTANTS.CERT_COOKIE)
-        print("expires_on:", certificate)
+        if (VERBOSE):
+            print("expires_on:", certificate)
         current_time = datetime.datetime.now(datetime.timezone.utc)
         expiry = pdu.parser.parse(certificate)
         if current_time < expiry:
@@ -56,45 +66,71 @@ def home(path):
             return redir
             """
 
-            url = CONSTANTS.TARGET_SITE + "/" + path
+            url = f"{CONSTANTS.TARGET_SITE}{path}"
+
+            excluded_headers = ["content-encoding", "content-length", "transfer-encoding", "connection", "host"]
+            if (VERBOSE):
+                print("URL", url)
+
+            """
 
             resp = requests.request(
                     method=request.method,
                     url=url,
-                    headers={k: v for k, v in request.headers if k.lower() != "host"},
+                    headers={k: v for k, v in request.headers if k.lower() not in excluded_headers},
                     data=request.get_data(),
                     cookies=request.cookies,
-                    allow_redirects=False,
             )
-            
-            print("MEMOIZED", resp)
 
+            """
+
+            # i give up. using this instead https://github.com/0xe2d0/Flask-Reverse-Proxy/blob/main/proxy.py
+
+            if request.method == "POST":
+                resp = requests.post(url, data = request.form)
+                
+            if request.method == "GET":
+                resp = requests.get(url)
+            
+            headers=[(k, v) for k, v in resp.raw.headers.items()  if k.lower() not in excluded_headers]
+            
+            if (VERBOSE):
+                print("MEMOIZED", resp, resp.url)
+            
             # Return response unchanged
-            return Response(resp.content, resp.status_code, resp.headers.items())
+            response = Response(resp.content, resp.status_code, headers)
+            print("TRUE RESP", response)
+            return response
         else:
             print("EXPIRED!")
     except Exception as e:
-        print("NO COOKIES :(")
-        print(e)
+        if (VERBOSE):
+            print("NO COOKIES :(")
+            print(e)
         pass
 
     if request.is_json:
         data = request.get_json()
-        print("JSON!!!")
+        if (VERBOSE):
+            print("JSON!!!")
         if "req_challenge" in data:
-            print("SEEKING CHALLENGE!!!!")
+            if (VERBOSE):
+                print("SEEKING CHALLENGE!!!!")
             prefix, timestamp = generate_prefix(CONSTANTS.PREFIX_PROMPT)
             return jsonify({"pow_prefix": prefix, "difficulty": CONSTANTS.DIFF, "timestamp": timestamp}), CONSTANTS.CODE_PROGRESS
         if "pow_prefix" in data and "difficulty" in data and "timestamp" in data and "pow_solution" in data:
             try:
-                print("RECEIVED POTENTIAL SOLUTION...")
+                if (VERBOSE):
+                    print("RECEIVED POTENTIAL SOLUTION...")
                 current_time = datetime.datetime.now(datetime.timezone.utc)
                 TIME = pdu.parser.parse(data["timestamp"])
 
-                print(str(current_time), "\n", TIME)
+                if (VERBOSE):
+                    print(str(current_time), "\n", TIME)
 
                 diff = current_time - TIME
-                print("DIFF", diff)
+                if (VERBOSE):
+                    print("DIFF", diff)
             
                 if diff >= datetime.timedelta(seconds = CONSTANTS.MAXIMUM_SECONDS):
                     return jsonify({"result": "FAIL"}), CONSTANTS.CODE_FAIL
@@ -139,4 +175,4 @@ def home(path):
     """
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port = 5000)
