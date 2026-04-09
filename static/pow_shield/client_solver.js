@@ -115,7 +115,9 @@ async function passed() {
 
 // DO NOT
 async function dothething() {
+  // Comment this next line out if you want a fixed image/splash.
   await setup_visuals();
+
   const challenge = await fetch(THIS_PORT, {
     method: 'POST', 
     headers: {

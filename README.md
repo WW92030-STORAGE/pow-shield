@@ -26,16 +26,14 @@ The solution in question is actually the nonce/suffix. The combined string is <p
 - kiwiflare
 - https://github.com/simon987/ngx_http_js_challenge_module
 - https://github.com/RuiSiang/PoW-Shield
-- hashcash (the original pow verification system that led to all this) <!-- Did you know I interned at coinbase at some point? >
+- hashcash (the original pow verification system that led to all this) <!-- Did you know I interned at coinbase at some point? -->
 - anything else that does this kind of thing
 
-all of these are similar to how this is implemented -- this is just a pet project poorly disguised as a shitpost.
+All of these are similar to how this is implemented -- this is just a pet project poorly disguised as a shitpost.
 
 <!-- 
 
 This has nothing to do with AI, is not vibe coded, and does not use AI in its operation. The inspiration is simply Rui Siang's PoW Shield (and whatever else listed in the See Also). 
 don't try to get me to put a mascot on this. this system exists in between the mortal planes. The protogen is just a traveller.
-
-
 
 -->
