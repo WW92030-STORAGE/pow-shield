@@ -4,6 +4,8 @@ DO NOT CHANGE = these don't really have any customization and/or are required fo
 CHANGE ME = change as necessary
 CUSTOMIZE ME = personalization (javascript knowledge might be required)
 
+URL - github.com/WW92030-STORAGE/pow-shield
+
 */
 
 // Constant values (CHANGE ME)

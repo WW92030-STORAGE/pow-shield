@@ -32,9 +32,15 @@ The solution in question is actually the nonce/suffix. The combined string is <p
 
 All of these are similar to how this is implemented -- this is just a pet project poorly disguised as a shitpost.
 
+## URL
+
+https://github.com/WW92030-STORAGE/pow-shield
+
 <!-- 
 
 This has nothing to do with AI, is not vibe coded, and does not use AI in its operation. The inspiration is simply Rui Siang's PoW Shield (and whatever else listed in the See Also). 
 don't try to get me to put a mascot on this. this system exists in between the parallel realms. The protogen is just a traveller. And so are you.
 
 -->
+
+<img src="cover.png" width="50%" alt="COVER">
