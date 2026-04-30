@@ -106,9 +106,9 @@ async function setup_visuals() {
 }
 
 // CUSTOMIZE ME
-async function passed() {
+async function passed(solution = "") {
   let WIN_COLOR = "cyan";
-  document.getElementById("splash").textContent = "A WINNER IS YOU";
+  document.getElementById("splash").textContent = "A WINNER IS YOU" + solution;
   document.getElementById("header").style.backgroundColor = WIN_COLOR;
   document.getElementById("splash").style.backgroundColor = WIN_COLOR;
 }
@@ -126,7 +126,9 @@ async function dothething() {
     body: JSON.stringify({"req_challenge": 0})
   });
 
-  const contents = await challenge.json();
+  const jsonfile = await challenge;
+  console.log("FILE", jsonfile)
+  const contents = await jsonfile.json();
 
   console.log(contents);
 
@@ -140,6 +142,7 @@ async function dothething() {
 
   console.log(solution);
 
+  // Begin challenge solving and checking. This prompts the backend to send over the cookie required to progress.
   const response = await fetch(THIS_PORT, {
     method: 'POST', 
     headers: {
@@ -152,7 +155,8 @@ async function dothething() {
         "timestamp": timestamp, 
         "difficulty": diff
       }
-    )
+    ),
+    credentials: 'include'
   });
 
   console.log("RAW RESPONSE" + response);
@@ -160,15 +164,19 @@ async function dothething() {
   const response_contents = await response.json();
   console.log("FINAL RESPONSE: " + response_contents);
 
-  passed();
+  passed(" " + solution);
 
   if (response_contents.url) {
     console.log("URL", response_contents.url);
-    location.reload();
   } else {
     console.log("what???");
-    location.reload();
   }
+
+  // End challenge solving and checking
+
+  // Reload
+
+  location.reload();
 
   console.log("xxxx");
 }

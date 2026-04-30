@@ -1,6 +1,16 @@
 -- Comments begin with two dashes. Empty lines are ignored. ![...] denotes a probability weight.
--- Put file names here. The root folder is ./wallpapers
+-- Put file names here. The root folder is ./wallpapers . Wallpapers are randomly chosen.
 
-![67] placeholder.png
-![67] chess.png
+-- The pre-included wallpapers are a combination of my art, geometry dash screenshots, Minecraft server screenshots, and various other content.
+-- Please do not include other people's OCs without permission. (Mersenne is fine. Geometry Dash icons, Minecraft skins, etc. are grey area but should be fine?)
+-- If you remove all entries from this file the background just becomes a black screen. (Although if you wish to do this it is recommended to edit the HTML/JS instead...)
 
+-- basic
+placeholder.png
+
+-- minecraft
+aquarium.png
+
+-- geometry dash
+chess.png
+khimaira.png

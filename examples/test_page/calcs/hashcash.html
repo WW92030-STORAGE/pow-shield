@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head><title>hashcash</title>
+<link href="darkmode.css" rel="stylesheet" type="text/css">
+<meta charset="UTF-8">
+<script src="hashcash.js"></script>
+
+<meta property="og:image" content="https://normalexisting.neocities.org/calcs/calcs_embed.png">
+</head>
+
+<body style="background-color:#000000">
+	<center>
+	
+
+	<a href="README.html"><h1>hashcash</h1></a>
+	
+	<h2>Find a missing number string to make the SHA256 hash smol.</h2>
+	<h2>The number goes in between the prefix and the suffix (both of which can be empty). e.g. If prefix = "proto" and suffix = "gen"</h2>
+	<h2>then if the chosen number is "1024" the input to SHA256 becomes "proto1024gen". This will only test numbers up to 2^24. (around 16 million)</h2>
+	
+	<h2>
+  <label for="input1">prefix = </label>
+  <input class="input" type="text" id="input1" placeholder="...">
+  </h2>
+  
+	<h2>
+  <label for="input2">suffix = </label>
+  <input class="input" type="text" id="input2" placeholder="...">
+  </h2>
+  
+	<h2>
+  <label for="input3">zeros (max 5/default 4) = </label>
+  <input class="input" type="text" id="input3" placeholder="...">
+  </h2>
+  
+  <button class="button" id="button1" onclick="button1()">SUBMIT</button>
+  
+  <h2 id="result1">RESULT = ...</h2>
+	<h2 id="result2">SHA256(...) = ...</h2>
+	
+	</center>
+</body>
+</html>

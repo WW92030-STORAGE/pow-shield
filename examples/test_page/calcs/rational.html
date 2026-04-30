@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head><title>rational</title>
+<link href="darkmode.css" rel="stylesheet" type="text/css">
+<meta charset="UTF-8">
+<script src="rational.js"></script>
+
+<meta property="og:image" content="https://normalexisting.neocities.org/calcs/calcs_embed.png">
+</head>
+
+<body style="background-color:#000000">
+	<center>
+	
+
+	<a href="README.html"><h1>rational</h1></a>
+	
+	<h2>Find an approximate fraction with smaller components.</h2>
+	<h2>This uses the same method as rational.c in the Linux kernel.</h2>
+	
+	<h2>
+  <label for="input1">numerator = </label>
+  <input class="input" type="text" id="input1" placeholder="...">
+  </h2>
+  
+	<h2>
+  <label for="input2">denominator = </label>
+  <input class="input" type="text" id="input2" placeholder="...">
+  </h2>
+  
+	<h2>
+  <label for="input3">max (default 65536) = </label>
+  <input class="input" type="text" id="input3" placeholder="...">
+  </h2>
+  
+  <button class="button" id="button1" onclick="button1()">SUBMIT</button>
+  
+  <h2 id="result1" style="whitespace: pre-wrap;">RESULT = ...</h2>
+  <h2 id="result2" style="whitespace: pre-wrap;">ERROR = ...</h2>
+	
+	</center>
+</body>
+</html>

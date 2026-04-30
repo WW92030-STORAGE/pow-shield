@@ -5,12 +5,18 @@ import requests
 import datetime
 from src.pow import sath
 import dateutil as pdu
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 import certifi
 import traceback
 
 app = Flask(__name__)
 CORS(app)
+
+from werkzeug.middleware.proxy_fix import ProxyFix
+
+app.wsgi_app = ProxyFix(
+    app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
+)
 
 VERBOSE = True
 
@@ -42,6 +48,7 @@ def get_wallpapers(path):
 # Actual request processing
 @app.route('/', defaults={'path': ''},  methods = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'])
 @app.route('/<path:path>', methods = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], strict_slashes = False)
+@cross_origin(supports_credentials=True)
 def home(path):
     if len(path) > 0 and path[-1] == "/":
         print("DIR!!!!", path)
@@ -107,6 +114,7 @@ def home(path):
         if (VERBOSE):
             print("NO COOKIES :(")
             print(e)
+            print(traceback.format_exc())
         pass
 
     if request.is_json:
@@ -149,10 +157,10 @@ def home(path):
                 print("URL", url)
 
                 resp = jsonify({"result": "PASS", "url": url})
-                thing = current_time + datetime.timedelta(seconds = CONSTANTS.EXPIRATION_SECONDS)
-                resp.set_cookie(CONSTANTS.CERT_COOKIE, str(thing))
+                thing = (current_time + datetime.timedelta(seconds = CONSTANTS.EXPIRATION_SECONDS)).isoformat()
+                resp.set_cookie(CONSTANTS.CERT_COOKIE, str(thing), httponly=True, secure = False, samesite="Lax")
 
-                print("RESP", resp, resp.json)
+                print("RESP", resp, resp.json, resp.__dict__)
                 return resp, CONSTANTS.CODE_PASS
             except Exception as e:
                 print("EXCEPTION", e)

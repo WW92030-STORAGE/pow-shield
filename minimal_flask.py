@@ -1,6 +1,6 @@
 from flask import Flask
 
-# A simple Flask page to print out the current URL slug.
+# A simple Flask page to print out the current URL slug. (Feel free to use this for testing)
 
 app = Flask(__name__)
 
