@@ -43,4 +43,4 @@ don't try to get me to put a mascot on this. this system exists in between the p
 
 -->
 
-<img src="cover.png" width="50%" alt="COVER">
+<img src="cover.png" width="100%" alt="COVER">
